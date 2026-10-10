@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vycount Manufacturing</title>
+<meta name="description" content="Vycount Manufacturing Ltd designs and makes physical products, from the first prototype to the production run. Registered in Nigeria, RC 9344948.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%2324272C'/%3E%3Cpath fill='%23E8590C' d='M5 7h7l4 10 4-10h7l-8 18h-6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --concrete: #E7E8E4;
+    --graphite: #24272C;
+    --graphite-deep: #1A1C20;
+    --orange: #E8590C;
+    --orange-light: #FF7A33;
+    --ink: #1B1D20;
+    --muted: #5A5F66;
+    --rule: #C6C8C2;
+    --on-dark: #F2F2EF;
+    --on-dark-muted: #A9AEB5;
+    --engrave: #30343A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --concrete: #17191C;
+      --ink: #ECEDEA;
+      --muted: #A2A7AE;
+      --rule: #33363B;
+    }
+  }
+  :root[data-theme="dark"] {
+    --concrete: #17191C;
+    --ink: #ECEDEA;
+    --muted: #A2A7AE;
+    --rule: #33363B;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--concrete);
+    color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--orange-light); outline-offset: 3px; border-radius: 1px; }
+  .wrap { max-width: 70rem; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+  .hazard {
+    height: 12px;
+    background: repeating-linear-gradient(-45deg, var(--orange) 0 14px, var(--graphite-deep) 14px 28px);
+  }
+
+  /* Hero */
+  .hero { background: var(--graphite); color: var(--on-dark); }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 1.25rem; padding-bottom: 1.25rem;
+    font-size: 0.95rem;
+  }
+  .topbar a { text-decoration: none; color: var(--on-dark-muted); }
+  .topbar a:hover { color: var(--on-dark); text-decoration: underline; text-underline-offset: 4px; }
+  .hero-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "title title" "copy plate";
+    align-items: start;
+    gap: clamp(2rem, 4.5vw, 3.5rem) clamp(2rem, 6vw, 5rem);
+    padding-top: clamp(2.5rem, 8vw, 6rem);
+    padding-bottom: clamp(3.5rem, 9vw, 7rem);
+  }
+  h1 {
+    margin: 0;
+    font-stretch: 125%;
+    font-weight: 850;
+    font-size: clamp(2.3rem, 8.6vw, 6.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+  h1 { grid-area: title; }
+  h1 span { display: block; }
+  .copy { grid-area: copy; }
+  .plate-wrap { grid-area: plate; }
+  .lede {
+    margin: 0;
+    max-width: 34ch;
+    font-size: clamp(1.1rem, 1.9vw, 1.3rem);
+    line-height: 1.45;
+    color: var(--on-dark-muted);
+  }
+  .hero-cta {
+    display: inline-block;
+    margin-top: 2.25rem;
+    padding: 0.85rem 1.4rem;
+    background: var(--orange);
+    color: #FFFFFF;
+    font-weight: 700;
+    font-stretch: 110%;
+    text-decoration: none;
+    border-radius: 3px;
+  }
+  .hero-cta:hover { background: #C94B08; }
+
+  /* The maker's plate */
+  .plate {
+    position: relative;
+    width: clamp(280px, 30vw, 380px);
+    padding: 26px 30px 24px;
+    border-radius: 10px;
+    color: var(--engrave);
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.07) 0 1px, rgba(0,0,0,.035) 1px 3px),
+      linear-gradient(155deg, #DDE0E4 0%, #B4BAC1 55%, #CBD0D5 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -2px 0 rgba(0,0,0,.18), 0 18px 40px -18px rgba(0,0,0,.65);
+  }
+  .rivet {
+    position: absolute; width: 13px; height: 13px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #F4F5F6 0 18%, #9097A0 60%, #6C727A 100%);
+    box-shadow: 0 1px 1px rgba(0,0,0,.45);
+  }
+  .rivet.tl { top: 11px; left: 11px; } .rivet.tr { top: 11px; right: 11px; }
+  .rivet.bl { bottom: 11px; left: 11px; } .rivet.br { bottom: 11px; right: 11px; }
+  .plate svg { display: block; width: 46%; margin: 4px auto 18px; }
+  .plate .cut { fill: var(--graphite); }
+  .plate .cut-edge { fill: none; stroke: rgba(255,255,255,.55); stroke-width: 2; }
+  .plate dl {
+    margin: 0;
+    display: grid; grid-template-columns: auto minmax(0, 1fr);
+    border-top: 2px solid rgba(48,52,58,.55);
+    font-size: 0.9rem;
+  }
+  .plate dt, .plate dd {
+    margin: 0; padding: 7px 0;
+    border-bottom: 1px solid rgba(48,52,58,.35);
+    text-shadow: 0 1px 0 rgba(255,255,255,.55);
+  }
+  .plate dt { padding-right: 1.25rem; font-weight: 500; }
+  .plate dd { font-weight: 750; font-stretch: 112%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .plate { animation: stamp 520ms cubic-bezier(.2,.9,.3,1.25) 200ms both; }
+    @keyframes stamp {
+      from { transform: scale(1.12) rotate(-2deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0); opacity: 1; }
+    }
+  }
+
+  /* Sections */
+  section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+  section + section { border-top: 1px solid var(--rule); }
+  h2 {
+    margin: 0 0 2.25rem;
+    font-stretch: 118%;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 3.3vw, 2.3rem);
+    line-height: 1.1;
+  }
+  .spec { margin: 0; border-top: 4px solid var(--orange); }
+  .spec div {
+    display: grid; grid-template-columns: 19rem minmax(0, 1fr);
+    gap: 0.4rem 3rem;
+    padding: 1.35rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .spec dt { font-weight: 750; font-stretch: 110%; font-size: 1.2rem; }
+  .spec dd { margin: 0; color: var(--muted); max-width: 52ch; }
+
+  .split { display: grid; grid-template-columns: 17rem minmax(0, 1fr); gap: 2rem 4rem; }
+  .split h2 { margin: 0; }
+  .about { max-width: 44rem; margin: 0 0 2.25rem; font-size: 1.15rem; }
+  .facts { margin: 0; display: grid; grid-template-columns: 12rem minmax(0, 1fr); }
+  .facts dt, .facts dd { padding: 0.9rem 0; border-top: 1px solid var(--rule); margin: 0; }
+  .facts dt { color: var(--muted); }
+  .facts dd { font-weight: 600; }
+
+  footer { background: var(--graphite-deep); color: var(--on-dark-muted); font-size: 0.95rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem; padding-top: 2rem; padding-bottom: 2rem; }
+  footer a { color: var(--on-dark); }
+
+  @media (max-width: 820px) {
+    .hero-body { grid-template-columns: 1fr; grid-template-areas: "title" "copy" "plate"; }
+    .plate { width: min(100%, 340px); }
+    .spec div { grid-template-columns: 1fr; }
+    .split { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+    .facts dd { border-top: 0; padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap topbar">
+      <a href="https://vycount.com">A Vycount company</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="wrap hero-body">
+      <h1><span>Vycount</span><span>Manufacturing</span></h1>
+      <div class="copy">
+        <p class="lede">We design and make physical products, from the first prototype to the production run.</p>
+        <a class="hero-cta" href="mailto:manufacturing@vycount.com">Email us</a>
+      </div>
+      <div class="plate-wrap"><div class="plate" role="img" aria-label="A steel maker's plate with a V cut through it, reading: Maker, Vycount Manufacturing Ltd. RC number 9344948. Established 2026.">
+        <span class="rivet tl"></span><span class="rivet tr"></span><span class="rivet bl"></span><span class="rivet br"></span>
+        <svg viewBox="0 0 120 92" aria-hidden="true">
+          <path class="cut" d="M2 2 H36 L60 58 L84 2 H118 L78 90 H42 Z"/>
+          <path class="cut-edge" d="M42 90 H78 L118 2"/>
+        </svg>
+        <dl aria-hidden="true">
+          <dt>Maker</dt><dd>Vycount Manufacturing Ltd</dd>
+          <dt>RC No.</dt><dd>9344948</dd>
+          <dt>Est.</dt><dd>2026</dd>
+        </dl>
+      </div></div>
+    </div>
+    <div class="hazard" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <h2>What we do</h2>
+        <dl class="spec">
+          <div>
+            <dt>Product development</dt>
+            <dd>Taking a product from an idea to a tested prototype, and on to a design that is ready for production.</dd>
+          </div>
+          <div>
+            <dt>Production</dt>
+            <dd>Making our own products in batches sized to demand.</dd>
+          </div>
+          <div>
+            <dt>Manufacturing for clients</dt>
+            <dd>Making parts and products to a client's design and specification.</dd>
+          </div>
+          <div>
+            <dt>Sourcing and quality</dt>
+            <dd>Finding materials, parts and suppliers, and checking every batch before it ships.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap split">
+        <h2>Company details</h2>
+        <div>
+          <p class="about">Vycount Manufacturing Ltd is a private company limited by shares, registered in Nigeria with the Corporate Affairs Commission.</p>
+          <dl class="facts">
+            <dt>Legal name</dt><dd>Vycount Manufacturing Ltd</dd>
+            <dt>RC number</dt><dd>9344948</dd>
+            <dt>Email</dt><dd><a href="mailto:manufacturing@vycount.com">manufacturing@vycount.com</a></dd>
+            <dt>Phone</dt><dd><a href="tel:+2347049074933">+234 704 907 4933</a></dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="hazard" aria-hidden="true"></div>
+    <div class="wrap">
+      <span>&copy; <span id="year">2026</span> Vycount Manufacturing Ltd. RC 9344948.</span>
+      <a href="https://vycount.com">vycount.com</a>
+    </div>
+  </footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
