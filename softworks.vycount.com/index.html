@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vycount Softworks</title>
+<meta name="description" content="Vycount Softworks Ltd builds mobile apps, games and software for the web and desktop. Registered in Nigeria, RC 9906391.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 5'%3E%3Crect width='9' height='5' fill='%232B3FD6'/%3E%3Cpath fill='%23FFB627' d='M0 0h2v1H0zM7 0h2v1H7zM1 1h2v1H1zM6 1h2v1H6zM2 2h2v1H2zM5 2h2v1H5zM3 3h3v1H3zM4 4h1v1H4z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ultramarine: #2B3FD6;
+    --ultramarine-deep: #1F2FA8;
+    --saffron: #FFB627;
+    --ink: #1B1F3B;
+    --muted: #5C6385;
+    --paper: #F2F4FA;
+    --rule: #D3D8E8;
+    --on-blue: #FFFFFF;
+    --on-blue-muted: #C9D0FF;
+    --tile-off: rgba(255, 255, 255, 0.10);
+    --tile: clamp(18px, 3.4vw, 38px);
+    --gap: clamp(4px, 0.7vw, 8px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #E8EAF6;
+      --muted: #A3A9C9;
+      --paper: #12152B;
+      --rule: #2A2F52;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E8EAF6;
+    --muted: #A3A9C9;
+    --paper: #12152B;
+    --rule: #2A2F52;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-optical-sizing: auto;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--saffron); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+
+  /* Hero */
+  .hero { background: var(--ultramarine); color: var(--on-blue); }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 1.25rem; padding-bottom: 1.25rem;
+    font-size: 0.95rem;
+  }
+  .topbar a { text-decoration: none; color: var(--on-blue-muted); }
+  .topbar a:hover { color: var(--on-blue); text-decoration: underline; text-underline-offset: 4px; }
+  .hero-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) auto;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+    padding-top: clamp(3rem, 9vw, 7rem);
+    padding-bottom: clamp(3.5rem, 10vw, 8rem);
+  }
+  h1 {
+    margin: 0;
+    font-weight: 800;
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+  }
+  h1 span { display: block; }
+  .lede {
+    margin: 1.75rem 0 0;
+    max-width: 30ch;
+    font-size: clamp(1.15rem, 2.1vw, 1.4rem);
+    line-height: 1.4;
+    color: var(--on-blue-muted);
+  }
+  .hero-cta {
+    display: inline-block;
+    margin-top: 2.25rem;
+    padding: 0.85rem 1.4rem;
+    background: var(--saffron);
+    color: #1B1F3B;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 6px;
+  }
+  .hero-cta:hover { background: #FFC650; }
+
+  /* Monogram board */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(9, var(--tile));
+    grid-auto-rows: var(--tile);
+    gap: var(--gap);
+  }
+  .board i {
+    display: block;
+    border-radius: 22%;
+    background: var(--tile-off);
+  }
+  .board i.on { background: var(--saffron); }
+  @media (prefers-reduced-motion: no-preference) {
+    .board i.on { animation: light 520ms cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--n) * 55ms + 250ms); }
+    @keyframes light {
+      from { background: var(--tile-off); transform: scale(.6); }
+      to   { background: var(--saffron); transform: scale(1); }
+    }
+  }
+
+  /* Sections */
+  section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+  section + section { border-top: 1px solid var(--rule); }
+  h2 {
+    margin: 0 0 2.5rem;
+    font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .split { display: grid; grid-template-columns: 16rem minmax(0, 1fr); gap: 2rem 4rem; }
+  .split h2 { margin: 0; }
+
+  .offer { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 3rem; margin: 0; }
+  .offer div { border-left: 3px solid var(--ultramarine); padding-left: 1.1rem; }
+  .offer dt { font-weight: 700; font-size: 1.2rem; }
+  .offer dd { margin: 0.35rem 0 0; color: var(--muted); max-width: 34ch; }
+
+  .about { max-width: 44rem; margin: 0 0 2.5rem; font-size: 1.15rem; }
+  .facts { margin: 0; display: grid; grid-template-columns: 12rem minmax(0, 1fr); }
+  .facts dt, .facts dd { padding: 0.9rem 0; border-top: 1px solid var(--rule); margin: 0; }
+  .facts dt { color: var(--muted); }
+  .facts dd { font-weight: 500; }
+
+  footer { background: var(--ultramarine-deep); color: var(--on-blue-muted); font-size: 0.95rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem; padding-top: 2rem; padding-bottom: 2rem; }
+  footer a { color: var(--on-blue); }
+
+  @media (max-width: 760px) {
+    .hero-body { grid-template-columns: 1fr; }
+    .board { order: -1; --tile: 22px; --gap: 5px; }
+    .split { grid-template-columns: 1fr; }
+    .offer { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+    .facts dd { border-top: 0; padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap topbar">
+      <a href="https://vycount.com">A Vycount company</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="wrap hero-body">
+      <div>
+        <h1><span>Vycount</span><span>Softworks</span></h1>
+        <p class="lede">We build mobile apps, games and software for the web and desktop.</p>
+        <a class="hero-cta" href="mailto:softworks@vycount.com">Email us</a>
+      </div>
+      <div class="board" id="board" aria-hidden="true"></div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap split">
+        <h2>What we make</h2>
+        <dl class="offer">
+          <div>
+            <dt>Mobile apps</dt>
+            <dd>Apps for iPhone and Android, from first design to the App Store and Google Play.</dd>
+          </div>
+          <div>
+            <dt>Games</dt>
+            <dd>Original games for mobile and desktop, designed and built in-house.</dd>
+          </div>
+          <div>
+            <dt>Web and desktop software</dt>
+            <dd>Web apps and desktop tools for Windows and Mac.</dd>
+          </div>
+          <div>
+            <dt>Software for businesses</dt>
+            <dd>Custom software and technical consulting, built to a client's brief.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap split">
+        <h2>Company details</h2>
+        <div>
+          <p class="about">Vycount Softworks Ltd is a private company limited by shares, registered in Nigeria with the Corporate Affairs Commission.</p>
+          <dl class="facts">
+            <dt>Legal name</dt><dd>Vycount Softworks Ltd</dd>
+            <dt>RC number</dt><dd>9906391</dd>
+            <dt>Registered office</dt><dd>DQ13, Voice of Nigeria, AMAC, Abuja, FCT 900107, Nigeria</dd>
+            <dt>Email</dt><dd><a href="mailto:softworks@vycount.com">softworks@vycount.com</a></dd>
+            <dt>Phone</dt><dd><a href="tel:+2347049074933">+234 704 907 4933</a></dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>&copy; <span id="year">2026</span> Vycount Softworks Ltd. RC 9906391.</span>
+      <a href="https://vycount.com">vycount.com</a>
+    </div>
+  </footer>
+
+<script>
+  // Pixel "V" monogram on a 9 x 5 board; lit tiles are numbered in reading order for the load sequence.
+  var lit = [[0,1,7,8],[1,2,6,7],[2,3,5,6],[3,4,5],[4]];
+  var board = document.getElementById('board'), n = 0;
+  for (var r = 0; r < 5; r++) {
+    for (var c = 0; c < 9; c++) {
+      var t = document.createElement('i');
+      if (lit[r].indexOf(c) !== -1) { t.className = 'on'; t.style.setProperty('--n', n++); }
+      board.appendChild(t);
+    }
+  }
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
