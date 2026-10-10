@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vycount</title>
+<meta name="description" content="Vycount is a family of companies in software, property, manufacturing and media: Vycount Softworks, Vycount Estates and Spaces, Vycount Manufacturing and Vycount Media.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F5F5F2'/%3E%3Cg fill='none' stroke-width='3'%3E%3Cpath stroke='%232B3FD6' d='M5 6l11 19 11-19'/%3E%3Cpath stroke='%231F5A3D' d='M10 6l6 10.5 6-10.5'/%3E%3Cpath stroke='%23E8590C' d='M14 6l2 3.5 2-3.5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F5F2;
+    --ink: #000000;
+    --muted: #55554F;
+    --rule: #D9D9D3;
+    --softworks: #2B3FD6;
+    --estates: #1F5A3D;
+    --manufacturing: #E8590C;
+    --media: #B4009E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #161614;
+      --ink: #F5F5F2;
+      --muted: #A7A79F;
+      --rule: #34342F;
+      --softworks: #5C6CF0;
+      --estates: #3F9A6C;
+      --manufacturing: #FF7A33;
+      --media: #E040C8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #161614;
+    --ink: #F5F5F2;
+    --muted: #A7A79F;
+    --rule: #34342F;
+    --softworks: #5C6CF0;
+    --estates: #3F9A6C;
+    --manufacturing: #FF7A33;
+    --media: #E040C8;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Instrument Sans", system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+
+  /* Hero: the V is drawn from the four companies' colours */
+  .hero {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: end;
+    gap: clamp(1.5rem, 5vw, 4.5rem);
+    padding-top: clamp(3.5rem, 11vw, 9rem);
+    padding-bottom: clamp(3rem, 8vw, 6rem);
+  }
+  .mark { width: clamp(150px, 24vw, 290px); height: auto; display: block; }
+  .mark path { fill: none; stroke-width: 15; stroke-linejoin: miter; stroke-linecap: butt; }
+  .mark .s1 { stroke: var(--softworks); }
+  .mark .s2 { stroke: var(--estates); }
+  .mark .s3 { stroke: var(--manufacturing); }
+  .mark .s4 { stroke: var(--media); }
+  @media (prefers-reduced-motion: no-preference) {
+    .mark path { stroke-dasharray: 460; stroke-dashoffset: 460; animation: draw 900ms cubic-bezier(.6,0,.2,1) forwards; }
+    .mark .s2 { animation-delay: 140ms; }
+    .mark .s3 { animation-delay: 280ms; }
+    .mark .s4 { animation-delay: 420ms; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+  }
+  h1 {
+    margin: 0;
+    font-stretch: 75%;
+    font-weight: 700;
+    font-size: clamp(4.5rem, 15vw, 12.5rem);
+    line-height: 0.8;
+    letter-spacing: -0.03em;
+    margin-left: -0.04em;
+  }
+  .lede {
+    margin: clamp(1.5rem, 3.2vw, 2.75rem) 0 0;
+    max-width: 26ch;
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    line-height: 1.3;
+    color: var(--muted);
+  }
+
+  /* Company list */
+  .companies { padding-bottom: clamp(3rem, 8vw, 6rem); }
+  h2 {
+    margin: 0 0 1.25rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+  .list li { border-bottom: 1px solid var(--rule); }
+  .co {
+    --c: var(--ink);
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 0.4rem 2rem;
+    padding: clamp(1.4rem, 3vw, 2.1rem) 0 clamp(1.4rem, 3vw, 2.1rem) clamp(1.5rem, 3vw, 2.25rem);
+    text-decoration: none;
+    isolation: isolate;
+  }
+  .co::before {
+    content: "";
+    position: absolute; z-index: -1;
+    left: 0; top: 0; bottom: 0;
+    width: 8px;
+    background: var(--c);
+    transition: width 320ms cubic-bezier(.3,.7,.2,1);
+  }
+  .co:hover::before, .co:focus-visible::before { width: 100%; background: var(--f); }
+  .co:hover, .co:focus-visible { color: #FFFFFF; }
+  .co:hover .what, .co:focus-visible .what { color: rgba(255,255,255,.82); }
+  .co:focus-visible { outline-offset: -3px; outline-color: #FFFFFF; }
+  .co .name {
+    font-stretch: 85%;
+    font-weight: 650;
+    font-size: clamp(1.7rem, 4.2vw, 3rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .co .addr { font-weight: 500; font-size: 1rem; white-space: nowrap; }
+  .co .what { grid-column: 1 / -1; color: var(--muted); max-width: 52ch; transition: color 200ms; }
+  /* --f: the fill on hover, dark enough for white text in both themes */
+  .soft { --c: var(--softworks);     --f: #2B3FD6; }
+  .est  { --c: var(--estates);       --f: #1F5A3D; }
+  .man  { --c: var(--manufacturing); --f: #B8460A; }
+  .med  { --c: var(--media);         --f: #A1008D; }
+
+  footer { border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.95rem; }
+  footer .wrap { padding-top: 2rem; padding-bottom: 2.5rem; display: grid; gap: 0.5rem; }
+  footer p { margin: 0; max-width: 70ch; }
+
+  @media (max-width: 720px) {
+    .hero { grid-template-columns: 1fr; align-items: start; }
+    .co { grid-template-columns: 1fr; }
+    .co .addr { order: 3; white-space: normal; }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div class="wrap hero">
+      <svg class="mark" viewBox="0 0 240 196" role="img" aria-label="The Vycount V, drawn in the four companies' colours">
+        <defs><clipPath id="top"><rect x="-10" y="0" width="260" height="210"/></clipPath></defs>
+        <g clip-path="url(#top)">
+          <path class="s1" d="M1.35 -14 L120 178 L238.65 -14"/>
+          <path class="s2" d="M28.35 -14 L120 134.3 L211.65 -14"/>
+          <path class="s3" d="M55.35 -14 L120 90.6 L184.65 -14"/>
+          <path class="s4" d="M82.35 -14 L120 46.9 L157.65 -14"/>
+        </g>
+      </svg>
+      <div>
+        <h1>Vycount</h1>
+        <p class="lede">A family of companies in software, property, manufacturing and media.</p>
+      </div>
+    </div>
+
+    <section class="wrap companies" aria-labelledby="companies">
+      <h2 id="companies">Our companies</h2>
+      <ul class="list">
+        <li>
+          <a class="co soft" href="https://softworks.vycount.com">
+            <span class="name">Vycount Softworks</span>
+            <span class="addr">softworks.vycount.com</span>
+            <span class="what">Mobile apps, games and software for the web and desktop.</span>
+          </a>
+        </li>
+        <li>
+          <a class="co est" href="https://estates.vycount.com">
+            <span class="name">Vycount Estates and Spaces</span>
+            <span class="addr">estates.vycount.com</span>
+            <span class="what">Land and property: buying, developing and looking after it.</span>
+          </a>
+        </li>
+        <li>
+          <a class="co man" href="https://manufacturing.vycount.com">
+            <span class="name">Vycount Manufacturing</span>
+            <span class="addr">manufacturing.vycount.com</span>
+            <span class="what">Physical products, from the first prototype to the production run.</span>
+          </a>
+        </li>
+        <li>
+          <a class="co med" href="https://media.vycount.com">
+            <span class="name">Vycount Media</span>
+            <span class="addr">media.vycount.com</span>
+            <span class="what">Video for YouTube and the web. Launching soon.</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Vycount Softworks Ltd (RC 9906391), Vycount Estates and Spaces Ltd (RC 8447450) and Vycount Manufacturing Ltd (RC 9344948) are separate companies registered in Nigeria with the Corporate Affairs Commission.</p>
+      <p>&copy; <span id="year">2026</span> Vycount</p>
+    </div>
+  </footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
