@@ -1,0 +1,80 @@
+# Publishes every Vycount site from this one repo.
+#
+#   vycount.com/               -> served straight from this repo by GitHub Pages
+#   <company>.vycount.com/     -> copied into the publish repo vycount/<company>.vycount.com,
+#                                 which GitHub Pages serves at that address
+#
+# GitHub Pages can only serve one web address per repo, which is why the
+# company sites each need a small publish repo. Nobody edits those by hand;
+# this workflow overwrites them on every push.
+#
+# Needs one secret: PUBLISH_TOKEN, a fine-grained token for the vycount account
+# with "Contents: Read and write" on the publish repos.
+
+name: Publish sites
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publish-sites
+  cancel-in-progress: false
+
+jobs:
+  main-site:
+    name: vycount.com
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: vycount.com
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  company-sites:
+    name: ${{ matrix.site }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site:
+          - softworks.vycount.com
+          - estates.vycount.com
+          - manufacturing.vycount.com
+          - media.vycount.com
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy ${{ matrix.site }} into its publish repo
+        env:
+          TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          SITE: ${{ matrix.site }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::The PUBLISH_TOKEN secret is missing. Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/vycount/${SITE}.git" out
+          rsync -a --delete --exclude .git "${SITE}/" out/
+          cd out
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "${SITE} is already up to date."
+            exit 0
+          fi
+          git commit -m "Publish from vycount/web@${GITHUB_SHA::7}"
+          git push origin HEAD
