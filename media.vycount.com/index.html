@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vycount Media</title>
+<meta name="description" content="Vycount Media is a new Vycount company making video for YouTube and the web. On air soon.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23131313'/%3E%3Cpath fill='%23E040C8' d='M6 8h20L16 26z'/%3E%3Cpath fill='%23131313' d='M12 8h8l-4 7z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400..800&family=Albert+Sans:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --page: #F1F0EE;
+    --ink: #18161C;
+    --muted: #5E5A66;
+    --rule: #D6D3D9;
+    --magenta: #B4009E;
+    --magenta-bright: #E040C8;
+    --cyan: #00A3A3;
+    --yellow: #B3A300;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page: #141217;
+      --ink: #EFEDF2;
+      --muted: #A39FAB;
+      --rule: #2E2B33;
+      --magenta: #E040C8;
+      --cyan: #19C4C4;
+      --yellow: #D6C619;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #141217;
+    --ink: #EFEDF2;
+    --muted: #A39FAB;
+    --rule: #2E2B33;
+    --magenta: #E040C8;
+    --cyan: #19C4C4;
+    --yellow: #D6C619;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: "Albert Sans", system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 3px solid var(--magenta); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+  .display { font-family: "Unbounded", system-ui, sans-serif; }
+
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 1.25rem; padding-bottom: 1.25rem;
+    font-size: 0.95rem; color: var(--muted);
+  }
+  .topbar a { text-decoration: none; }
+  .topbar a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* The test card */
+  .card {
+    position: relative;
+    container-type: inline-size;
+    margin-top: clamp(0.5rem, 2vw, 1.5rem);
+    border-radius: clamp(10px, 1.6vw, 18px);
+    overflow: hidden;
+    background: #131313;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+  }
+  .card > svg { display: block; width: 100%; height: auto; }
+  .ident {
+    position: absolute;
+    left: 50%; top: 44%;
+    transform: translate(-50%, -50%);
+    width: 42%;
+    padding: 3.2cqw 2.4cqw 2.6cqw;
+    border-radius: 2cqw;
+    background: #131313;
+    color: #FFFFFF;
+    text-align: center;
+  }
+  .ident svg { display: block; width: 7cqw; height: auto; margin: 0 auto 1.8cqw; overflow: visible; }
+  .ident .tri { fill: var(--magenta-bright); }
+  .ident .notch { fill: #131313; }
+  h1 {
+    margin: 0;
+    font-weight: 700;
+    font-size: max(3.3cqw, 14px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .onair {
+    display: flex; justify-content: center; gap: 2cqw;
+    margin: 1.2cqw 0 0;
+    font-size: max(1.7cqw, 10px);
+    color: #CFCBD6;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ident .play { transform-box: fill-box; transform-origin: 50% 40%; transform: rotate(-90deg); animation: turn 650ms cubic-bezier(.6,0,.2,1.15) 700ms forwards; }
+    .ident .notch { opacity: 0; animation: cut 260ms ease 1400ms forwards; }
+    @keyframes turn { to { transform: rotate(0deg); } }
+    @keyframes cut { to { opacity: 1; } }
+  }
+
+  /* Intro under the card */
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 1.5rem 3rem;
+    padding-top: clamp(2.25rem, 5vw, 3.5rem);
+    padding-bottom: clamp(3.5rem, 8vw, 6rem);
+  }
+  .lede {
+    margin: 0;
+    max-width: 34ch;
+    font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+    line-height: 1.32;
+  }
+  .cta {
+    display: inline-block;
+    padding: 0.85rem 1.4rem;
+    background: var(--ink);
+    color: var(--page);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 999px;
+    white-space: nowrap;
+    justify-self: start;
+  }
+  .cta:hover { background: var(--magenta); color: #FFFFFF; }
+
+  section { padding: clamp(3.5rem, 8vw, 6rem) 0; border-top: 1px solid var(--rule); }
+  h2 {
+    margin: 0 0 2.5rem;
+    font-weight: 600;
+    font-size: clamp(1.45rem, 3vw, 2.1rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .shows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; margin: 0; }
+  .shows div { border-top: 6px solid var(--bar); padding-top: 1.25rem; }
+  .shows div:nth-child(1) { --bar: var(--cyan); }
+  .shows div:nth-child(2) { --bar: var(--magenta); }
+  .shows div:nth-child(3) { --bar: var(--yellow); }
+  .shows dt { font-weight: 700; font-size: 1.3rem; line-height: 1.25; }
+  .shows dd { margin: 0.5rem 0 0; color: var(--muted); max-width: 34ch; }
+
+  .split { display: grid; grid-template-columns: 17rem minmax(0, 1fr); gap: 2rem 4rem; }
+  .split h2 { margin: 0; }
+  .about { max-width: 44rem; margin: 0 0 2.25rem; font-size: 1.15rem; }
+  .facts { margin: 0; display: grid; grid-template-columns: 12rem minmax(0, 1fr); }
+  .facts dt, .facts dd { padding: 0.9rem 0; border-top: 1px solid var(--rule); margin: 0; }
+  .facts dt { color: var(--muted); }
+  .facts dd { font-weight: 600; }
+
+  footer { border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.95rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem; padding-top: 2rem; padding-bottom: 2rem; }
+  footer a { color: var(--ink); }
+
+  @media (max-width: 820px) {
+    .intro { grid-template-columns: 1fr; align-items: start; }
+    .shows { grid-template-columns: 1fr; gap: 2.25rem; }
+    .split { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+    .facts dd { border-top: 0; padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="topbar">
+      <a href="https://vycount.com">A Vycount company</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 1600 900" aria-hidden="true" preserveAspectRatio="none">
+          <rect x="0.00" y="0" width="229.17" height="600" fill="#C0C0C0"/>
+          <rect x="228.57" y="0" width="229.17" height="600" fill="#C0C000"/>
+          <rect x="457.14" y="0" width="229.17" height="600" fill="#00C0C0"/>
+          <rect x="685.71" y="0" width="229.17" height="600" fill="#00C000"/>
+          <rect x="914.29" y="0" width="229.17" height="600" fill="#C000C0"/>
+          <rect x="1142.86" y="0" width="229.17" height="600" fill="#C00000"/>
+          <rect x="1371.43" y="0" width="229.17" height="600" fill="#0000C0"/>
+          <rect x="0.00" y="600" width="229.17" height="75" fill="#0000C0"/>
+          <rect x="228.57" y="600" width="229.17" height="75" fill="#131313"/>
+          <rect x="457.14" y="600" width="229.17" height="75" fill="#C000C0"/>
+          <rect x="685.71" y="600" width="229.17" height="75" fill="#131313"/>
+          <rect x="914.29" y="600" width="229.17" height="75" fill="#00C0C0"/>
+          <rect x="1142.86" y="600" width="229.17" height="75" fill="#131313"/>
+          <rect x="1371.43" y="600" width="229.17" height="75" fill="#C0C0C0"/>
+          <rect x="0.00" y="675" width="286.31" height="225" fill="#00214C"/>
+          <rect x="285.71" y="675" width="286.31" height="225" fill="#FFFFFF"/>
+          <rect x="571.43" y="675" width="286.31" height="225" fill="#32006A"/>
+          <rect x="857.14" y="675" width="286.31" height="225" fill="#131313"/>
+          <rect x="1142.86" y="675" width="76.79" height="225" fill="#090909"/>
+          <rect x="1219.05" y="675" width="76.79" height="225" fill="#131313"/>
+          <rect x="1295.24" y="675" width="76.79" height="225" fill="#1D1D1D"/>
+          <rect x="1371.43" y="675" width="228.57" height="225" fill="#131313"/>
+      </svg>
+      <div class="ident">
+        <svg viewBox="0 0 100 86" aria-hidden="true">
+          <g class="play">
+            <path class="tri" d="M0 0 H100 L50 86 Z"/>
+            <path class="notch" d="M29 0 H71 L50 37 Z"/>
+          </g>
+        </svg>
+        <h1 class="display">Vycount Media</h1>
+        <p class="onair"><span>On air soon</span><span id="tc" aria-hidden="true">00:00:00:00</span></p>
+      </div>
+    </div>
+    <div class="intro">
+      <p class="lede">A new Vycount company making video for YouTube and the web. We're not on air yet.</p>
+      <a class="cta" href="mailto:media@vycount.com">Email us</a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <h2 class="display">What we'll make</h2>
+        <dl class="shows">
+          <div>
+            <dt>Our YouTube channel</dt>
+            <dd>Original series and shows, published on YouTube.</dd>
+          </div>
+          <div>
+            <dt>Video for Vycount</dt>
+            <dd>Launches, explainers and behind-the-scenes films from across the Vycount companies.</dd>
+          </div>
+          <div>
+            <dt>Video for businesses</dt>
+            <dd>Adverts, product videos and explainers made to a client's brief.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap split">
+        <h2 class="display">Get in touch</h2>
+        <div>
+          <p class="about">To work with us, or to hear when we launch, send us an email.</p>
+          <dl class="facts">
+            <dt>Email</dt><dd><a href="mailto:media@vycount.com">media@vycount.com</a></dd>
+            <dt>Phone</dt><dd><a href="tel:+2347049074933">+234 704 907 4933</a></dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>&copy; <span id="year">2026</span> Vycount Media, a Vycount company.</span>
+      <a href="https://vycount.com">vycount.com</a>
+    </div>
+  </footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // Studio timecode (25 frames a second) counting from when the page opened.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var tc = document.getElementById('tc'), t0 = performance.now();
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    setInterval(function () {
+      var f = Math.floor((performance.now() - t0) / 40);
+      tc.textContent = pad(Math.floor(f / 90000) % 24) + ':' + pad(Math.floor(f / 1500) % 60) + ':' + pad(Math.floor(f / 25) % 60) + ':' + pad(f % 25);
+    }, 40);
+  }
+</script>
+</body>
+</html>
