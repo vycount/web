@@ -36,6 +36,7 @@ The workflow needs one repo secret, `PUBLISH_TOKEN`: a fine-grained personal acc
 
 ## DNS (Porkbun, vycount.com)
 
-- `vycount.com`: A records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+- `vycount.com`: ALIAS `vycount.github.io`
 - `www`, `softworks`, `estates`, `manufacturing`, `media`: CNAME `vycount.github.io`
-- Email records (Zoho) are separate and unaffected.
+- `_github-pages-challenge-vycount`: TXT record that verifies vycount.com for the `vycount` GitHub account. Don't delete it.
+- Email records (Zoho: MX, SPF, DKIM, DMARC) are separate and unaffected.
