@@ -4,196 +4,155 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vycount Media</title>
+<meta name="description" content="Vycount Media makes video for YouTube and the web — our own shows, and films for the brands we work with.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FF3B30'/%3E%3Cpath fill='%23FFFFFF' d='M12 9l12 7-12 7z'/%3E%3C/svg%3E">
-<meta name="description" content="Vycount Media makes video for YouTube and the web — original shows, and films for the brands we work with.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#F5F3EF}
-a{color:#111111}a:hover{color:#C8261F}
-.mm-nav a{text-decoration:none}
-.mm-nav a:hover{color:#C8261F}
-@keyframes mmPulse{0%,100%{opacity:1}50%{opacity:.3}}
-.mm-live{animation:mmPulse 1.6s ease-in-out infinite}
-.mm-play{transition:transform .4s cubic-bezier(.2,.7,.2,1)}
-.mm-hero:hover .mm-play{transform:scale(1.08)}
-.mm-card{transition:transform .5s cubic-bezier(.2,.7,.2,1)}
-.mm-card:hover{transform:translateY(-6px)}
-.mm-row{transition:padding .35s}
-.mm-row:hover{padding-left:12px}
-input{font:inherit}
-@media (max-width:640px){.mm-hero{aspect-ratio:4/5!important}.mm-play{width:72px!important;height:72px!important;margin:-36px 0 0 -36px!important}}
+:root{
+  --paper:#F5F3EF; --sheet:#FFFFFF; --ink:#111111; --muted:#5F5C56; --rule:#DFDAD0;
+  --red:#FF3B30; --red-text:#C8261F; --screen:#1A1918;
+  --night:#111111; --on-night:#F5F3EF; --on-night-muted:#BDB8AF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F0F0E; --sheet:#181816; --ink:#F2F0EB; --muted:#A8A39A; --rule:#2B2A27;
+    --red-text:#FF6A60; --screen:#000000; --night:#080808;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F0F0E; --sheet:#181816; --ink:#F2F0EB; --muted:#A8A39A; --rule:#2B2A27;
+  --red-text:#FF6A60; --screen:#000000; --night:#080808;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Schibsted Grotesk",system-ui,sans-serif;font-size:1.0625rem;line-height:1.6}
+a{color:inherit}
+a:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:2px}
+.wrap{max-width:70rem;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.serif{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400}
+
+/* Header */
+.topbar{display:flex;justify-content:space-between;gap:1rem;padding-block:1.25rem;font-size:.95rem;color:var(--muted)}
+.topbar a{text-decoration:none}
+.topbar a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.hero-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(2rem,6vw,5.5rem);align-items:center;padding-block:clamp(2rem,6vw,4.5rem) clamp(3.5rem,9vw,7rem)}
+h1{margin:0;font-weight:700;font-size:clamp(3rem,8vw,6.2rem);line-height:.92;letter-spacing:-.05em}
+h1 span{display:block}
+h1 .serif{letter-spacing:-.02em}
+.lede{max-width:32ch;margin:1.6rem 0 0;font-size:clamp(1.1rem,1.9vw,1.3rem);line-height:1.45;color:var(--muted)}
+.hero-cta{display:inline-block;margin-top:2.25rem;padding:.85rem 1.45rem;background:var(--red);color:#111111;font-weight:600;text-decoration:none;border-radius:999px}
+.hero-cta:hover{background:#FF5A50}
+
+/* Player */
+.player{width:100%;max-width:460px;justify-self:end;margin:0}
+.screen{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:var(--screen)}
+.screen::after{content:"";position:absolute;inset:auto 0 0 0;height:55%;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.badge{position:absolute;left:14px;top:14px;z-index:1;display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;background:rgba(245,243,239,.95);color:#111111;font-size:.75rem;font-weight:600}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--red)}
+.play{position:absolute;left:50%;top:50%;z-index:1;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center}
+.play::before{content:"";border-left:18px solid #FFFFFF;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px}
+.bar{position:absolute;left:14px;right:14px;bottom:14px;z-index:1;height:4px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden}
+.bar b{display:block;height:100%;width:38%;background:var(--red)}
+.shelf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.shelf span{aspect-ratio:3/4;border-radius:10px;display:flex;align-items:flex-end;padding:10px;font:400 2.2rem/0.8 "Instrument Serif",Georgia,serif}
+.shelf span:nth-child(1){background:var(--ink);color:var(--paper)}
+.shelf span:nth-child(2){background:var(--red);color:#111111}
+.shelf span:nth-child(3){background:#E4DDD0;color:#111111}
+@media (prefers-reduced-motion: no-preference){
+  .bar b{animation:progress 6s linear infinite}
+  .badge i{animation:pulse 1.6s ease-in-out infinite}
+  .shelf span{animation:rise 520ms cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--n) * 90ms + 300ms)}
+}
+@keyframes progress{from{width:0}to{width:100%}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+
+/* Sections */
+section{padding:clamp(3.5rem,8vw,6rem) 0;border-top:1px solid var(--rule)}
+h2{margin:0 0 2.5rem;font-weight:700;font-size:clamp(1.9rem,3.8vw,2.7rem);line-height:1.05;letter-spacing:-.04em}
+.work{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem;margin:0}
+.work div{position:relative;border-top:1px solid var(--ink);padding-top:1.4rem}
+.work div::before{content:"";position:absolute;top:-6px;left:0;border-left:10px solid var(--red);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.work dt{font-weight:700;font-size:1.2rem;letter-spacing:-.02em}
+.work dd{margin:.4rem 0 0;color:var(--muted);max-width:32ch}
+
+.split{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2rem 4rem}
+.split h2{margin:0}
+.about{margin:0 0 2rem;max-width:44rem;font-size:1.15rem}
+.facts{display:grid;grid-template-columns:12rem minmax(0,1fr);margin:0}
+.facts dt,.facts dd{margin:0;padding:.9rem 0;border-top:1px solid var(--rule)}
+.facts dt{color:var(--muted)}
+.facts dd{font-weight:500}
+.facts a{text-decoration-color:var(--red);text-underline-offset:4px}
+
+footer{background:var(--night);color:var(--on-night-muted);font-size:.95rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem 2rem;padding-top:2rem;padding-bottom:2rem}
+footer a{color:var(--on-night)}
+
+@media (max-width:820px){
+  .hero-body,.split,.facts,.work{grid-template-columns:minmax(0,1fr)}
+  .player{justify-self:start}
+  .facts dd{border-top:0;padding-top:0}
+}
 </style>
 </head>
 <body>
-<div style="background: #F5F3EF; color: #111111; font-family: 'Schibsted Grotesk', 'Helvetica Neue', sans-serif">
-
-  <!-- Announcement -->
-  <div style="background: #111111; color: #F5F3EF; font-size: 13px">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 10px 40px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px">
-      <span class="mm-live" style="width: 7px; height: 7px; border-radius: 50%; background: #FF3B30"></span>
-      <span>New on the channel: [LATEST EPISODE TITLE]</span>
-      <a href="#watch" style="color: #F5F3EF; text-decoration: underline; text-underline-offset: 3px">Watch now</a>
-    </div>
+<header>
+  <div class="wrap topbar">
+    <a href="https://vycount.com/">A Vycount company</a>
+    <a href="#contact">Contact</a>
   </div>
-
-  <!-- Nav -->
-  <header style="max-width: 1280px; margin: 0 auto; padding: 22px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; border-bottom: 1px solid #E2DED6">
-    <a href="./" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
-      <span style="width: 22px; height: 22px; border-radius: 6px; background: #FF3B30; display: flex; align-items: center; justify-content: center"><span style="width: 0; height: 0; border-left: 8px solid #FFFFFF; border-top: 5px solid transparent; border-bottom: 5px solid transparent; margin-left: 2px"></span></span>
-      <span style="font-weight: 800; font-size: 20px; letter-spacing: -0.03em">Vycount <span style="font-weight: 500">Media</span></span>
-    </a>
-    <nav class="mm-nav" aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 30px; font-size: 15px; font-weight: 500">
-      <a href="#watch">Watch</a>
-      <a href="#studio">Studio</a>
-      <a href="#notify">Newsletter</a>
-      <a href="https://vycount.com/">Vycount</a>
-      <a href="#watch" style="background: #111111; color: #F5F3EF; padding: 0 20px; min-height: 44px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px">Subscribe on YouTube</a>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section style="max-width: 1280px; margin: 0 auto; padding: 88px 40px 40px">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px 64px; margin-bottom: 48px">
-      <h1 style="flex: 1 1 620px; font-weight: 700; font-size: clamp(52px, 7.2vw, 108px); line-height: 0.96; letter-spacing: -0.05em; margin: 0">Stories made<br>to be <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em">watched.</span></h1>
-      <p style="flex: 0 1 360px; font-size: 18px; line-height: 1.6; color: #5F5C56; margin: 0">Vycount Media makes video for YouTube and the web — our own shows, and films for the brands we work with.</p>
+  <div class="wrap hero-body">
+    <div>
+      <h1><span>Vycount</span><span class="serif">Media</span></h1>
+      <p class="lede">Video for YouTube and the web — our own shows, and films for the brands we work with.</p>
+      <a class="hero-cta" href="mailto:media@vycount.com">Email us</a>
     </div>
-
-    <a href="#watch" class="mm-hero" aria-label="Play the featured episode" style="position: relative; display: block; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #1A1918; text-decoration: none">
-      <div aria-hidden="true" style="position: absolute; inset: auto 0 0 0; height: 55%; background: linear-gradient(transparent, rgba(0,0,0,0.65))"></div>
-      <span style="position: absolute; left: 28px; top: 28px; display: inline-flex; align-items: center; gap: 8px; background: rgba(245,243,239,0.95); color: #111111; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px"><span class="mm-live" style="width: 7px; height: 7px; border-radius: 50%; background: #FF3B30"></span>New episode</span>
-      <span class="mm-play" style="position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; background: #FF3B30; display: flex; align-items: center; justify-content: center"><span style="width: 0; height: 0; border-left: 26px solid #FFFFFF; border-top: 16px solid transparent; border-bottom: 16px solid transparent; margin-left: 6px"></span></span>
-      <div style="position: absolute; left: 28px; right: 28px; bottom: 28px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; color: #F5F3EF">
-        <div>
-          <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #D9D4CB">Featured</div>
-          <div style="font-size: clamp(24px, 2.6vw, 36px); font-weight: 700; letter-spacing: -0.03em; margin-top: 6px">[EPISODE TITLE]</div>
-        </div>
+    <figure class="player" aria-hidden="true">
+      <div class="screen">
+        <span class="badge"><i></i>New episode</span>
+        <span class="play"></span>
+        <span class="bar"><b></b></span>
       </div>
-    </a>
-  </section>
+      <div class="shelf"><span style="--n:0">01</span><span style="--n:1">02</span><span style="--n:2">03</span></div>
+    </figure>
+  </div>
+</header>
 
-  <!-- Coming to the channel -->
-  <section id="watch" style="max-width: 1280px; margin: 0 auto; padding: 96px 40px 40px">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 32px">
-      <h2 style="font-weight: 700; font-size: clamp(30px, 3.2vw, 44px); letter-spacing: -0.04em; margin: 0">Latest from the channel</h2>
-      <a href="#watch" style="font-weight: 600; font-size: 15px">See all on YouTube →</a>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 20px">
-      <article class="mm-card">
-        <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: #111111; color: #F5F3EF; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between">
-          <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #FF6A60">Series</span>
-          <span style="font-family: 'Instrument Serif', Georgia, serif; font-size: 120px; line-height: 0.8">01</span>
-        </div>
-        <h3 style="font-weight: 700; font-size: 20px; letter-spacing: -0.02em; margin: 16px 0 4px">[SHOW TITLE]</h3>
-        <p style="font-size: 15px; color: #5F5C56; margin: 0">Original series · Watch now</p>
-      </article>
-      <article class="mm-card">
-        <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: #FF3B30; color: #111111; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between">
-          <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">Series</span>
-          <span style="font-family: 'Instrument Serif', Georgia, serif; font-size: 120px; line-height: 0.8">02</span>
-        </div>
-        <h3 style="font-weight: 700; font-size: 20px; letter-spacing: -0.02em; margin: 16px 0 4px">[SHOW TITLE]</h3>
-        <p style="font-size: 15px; color: #5F5C56; margin: 0">Original series · Watch now</p>
-      </article>
-      <article class="mm-card">
-        <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: #E4DDD0; color: #111111; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between">
-          <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5F5C56">Behind the scenes</span>
-          <span style="font-family: 'Instrument Serif', Georgia, serif; font-size: 120px; line-height: 0.8">03</span>
-        </div>
-        <h3 style="font-weight: 700; font-size: 20px; letter-spacing: -0.02em; margin: 16px 0 4px">Inside Vycount</h3>
-        <p style="font-size: 15px; color: #5F5C56; margin: 0">Launches and behind-the-scenes · Watch now</p>
-      </article>
-      <article class="mm-card">
-        <div style="aspect-ratio: 3 / 4; border-radius: 16px; background: #2B2F36; color: #F5F3EF; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between">
-          <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #B9BEC7">Explainers</span>
-          <span style="font-family: 'Instrument Serif', Georgia, serif; font-size: 120px; line-height: 0.8">04</span>
-        </div>
-        <h3 style="font-weight: 700; font-size: 20px; letter-spacing: -0.02em; margin: 16px 0 4px">[SHOW TITLE]</h3>
-        <p style="font-size: 15px; color: #5F5C56; margin: 0">Explainer series · Watch now</p>
-      </article>
+<main>
+  <section>
+    <div class="wrap">
+      <h2>What we make</h2>
+      <dl class="work">
+        <div><dt>Our channel</dt><dd>Original series and shows, published on YouTube.</dd></div>
+        <div><dt>Film for Vycount</dt><dd>Launch films, explainers and behind-the-scenes for the Vycount companies.</dd></div>
+        <div><dt>Film for brands</dt><dd>Adverts, product videos and explainers, made to your brief.</dd></div>
+      </dl>
     </div>
   </section>
 
-  <!-- Studio -->
-  <section id="studio" style="max-width: 1280px; margin: 0 auto; padding: 120px 40px">
-    <div style="display: flex; flex-wrap: wrap; gap: 48px 80px">
-      <div style="flex: 1 1 380px">
-        <p style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5F5C56; margin: 0 0 20px">Vycount Media Studio</p>
-        <h2 style="font-weight: 700; font-size: clamp(36px, 4.4vw, 60px); line-height: 1; letter-spacing: -0.045em; margin: 0">We make film <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400">for brands,</span> too.</h2>
-        <a href="mailto:media@vycount.com" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 36px; background: #FF3B30; color: #111111; text-decoration: none; font-weight: 600; padding: 0 24px; min-height: 52px; border-radius: 999px">Start a project →</a>
-      </div>
-      <div style="flex: 999 1 520px; min-width: 0">
-        <div class="mm-row" style="display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 28px 0; border-top: 1px solid #111111">
-          <h3 style="flex: 1 1 220px; margin: 0; font-weight: 700; font-size: 22px; letter-spacing: -0.02em">Adverts</h3>
-          <p style="flex: 1 1 300px; margin: 0; font-size: 16px; line-height: 1.6; color: #5F5C56">Short, sharp films that sell — made to your brief.</p>
-        </div>
-        <div class="mm-row" style="display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 28px 0; border-top: 1px solid #DCD7CD">
-          <h3 style="flex: 1 1 220px; margin: 0; font-weight: 700; font-size: 22px; letter-spacing: -0.02em">Product videos</h3>
-          <p style="flex: 1 1 300px; margin: 0; font-size: 16px; line-height: 1.6; color: #5F5C56">Show what you make, and how it works.</p>
-        </div>
-        <div class="mm-row" style="display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 28px 0; border-top: 1px solid #DCD7CD">
-          <h3 style="flex: 1 1 220px; margin: 0; font-weight: 700; font-size: 22px; letter-spacing: -0.02em">Explainers</h3>
-          <p style="flex: 1 1 300px; margin: 0; font-size: 16px; line-height: 1.6; color: #5F5C56">Complicated ideas, made clear on screen.</p>
-        </div>
-        <div class="mm-row" style="display: flex; flex-wrap: wrap; gap: 8px 32px; padding: 28px 0; border-top: 1px solid #DCD7CD; border-bottom: 1px solid #DCD7CD">
-          <h3 style="flex: 1 1 220px; margin: 0; font-weight: 700; font-size: 22px; letter-spacing: -0.02em">For the Vycount family</h3>
-          <p style="flex: 1 1 300px; margin: 0; font-size: 16px; line-height: 1.6; color: #5F5C56">Launch films, explainers and behind-the-scenes for Softworks, Estates and Manufacturing.</p>
-        </div>
+  <section id="contact">
+    <div class="wrap split">
+      <h2>Company details</h2>
+      <div>
+        <p class="about">Vycount Media makes video for YouTube and the web. It is one of the Vycount companies.</p>
+        <dl class="facts">
+          <dt>Name</dt><dd>Vycount Media</dd>
+          <dt>Part of</dt><dd><a href="https://vycount.com/">Vycount</a></dd>
+          <dt>Email</dt><dd><a href="mailto:media@vycount.com">media@vycount.com</a></dd>
+        </dl>
       </div>
     </div>
   </section>
+</main>
 
-  <!-- Newsletter -->
-  <section id="notify" style="max-width: 1280px; margin: 0 auto; padding: 0 40px 120px">
-    <div style="background: #111111; color: #F5F3EF; border-radius: 28px; padding: clamp(40px, 6vw, 88px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 40px">
-      <div style="flex: 1 1 420px">
-        <h2 style="font-weight: 700; font-size: clamp(40px, 5vw, 72px); line-height: 0.98; letter-spacing: -0.05em; margin: 0">Never miss<br>an <span style="font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; color: #FF6A60">episode.</span></h2>
-        <p style="font-size: 17px; line-height: 1.6; color: #BDB8AF; margin: 20px 0 0; max-width: 420px">New episodes in your inbox, as they drop. Nothing else.</p>
-      </div>
-      <form data-mailto="media@vycount.com" data-subject="Subscribe to new Vycount Media episodes" style="flex: 1 1 420px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end">
-        <label style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #BDB8AF">Email address
-          <input type="email" style="background: #1F1E1C; border: 1px solid #3A3835; border-radius: 999px; color: #F5F3EF; padding: 0 22px; min-height: 54px; box-sizing: border-box; font-size: 16px">
-        </label>
-        <button type="submit" style="background: #F5F3EF; color: #111111; border: 0; border-radius: 999px; padding: 0 28px; min-height: 54px; font: inherit; font-weight: 600; cursor: pointer">Subscribe</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer style="border-top: 1px solid #E2DED6">
-    <div style="max-width: 1280px; margin: 0 auto; padding: 56px 40px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 32px; font-size: 15px">
-      <div style="display: flex; flex-direction: column; gap: 10px">
-        <span style="font-weight: 800; font-size: 18px; letter-spacing: -0.03em">Vycount <span style="font-weight: 500">Media</span></span>
-        <span style="color: #5F5C56">Video for YouTube and the web.</span>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 10px">
-        <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5F5C56">Watch</span>
-        <a href="#watch" style="text-decoration: none">YouTube</a>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 10px">
-        <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5F5C56">Contact</span>
-        <a href="mailto:media@vycount.com" style="text-decoration: none">media@vycount.com</a>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 10px">
-        <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5F5C56">Family</span>
-        <a href="https://vycount.com/" style="text-decoration: none">A Vycount company</a>
-      </div>
-    </div>
-    <div style="max-width: 1280px; margin: 0 auto; padding: 0 40px 32px; font-size: 13px; color: #5F5C56">© 2026 Vycount Media</div>
-  </footer>
-</div>
-<script>
-document.querySelectorAll('form[data-mailto]').forEach(function(f){
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var lines=[];
-    f.querySelectorAll('label').forEach(function(l){
-      var c=l.querySelector('input,select,textarea'); if(!c||!c.value) return;
-      lines.push(l.childNodes[0].textContent.trim()+': '+c.value);
-    });
-    location.href='mailto:'+f.dataset.mailto+'?subject='+encodeURIComponent(f.dataset.subject)+'&body='+encodeURIComponent(lines.join('\n'));
-  });
-});
-</script>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Vycount Media.</span>
+    <a href="https://vycount.com/">vycount.com</a>
+  </div>
+</footer>
 </body>
 </html>
