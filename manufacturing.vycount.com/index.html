@@ -4,200 +4,179 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vycount Manufacturing</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23111111'/%3E%3Cpath fill='%23FF5A1F' d='M5 7h7l4 10 4-10h7l-8 18h-6z'/%3E%3C/svg%3E">
-<meta name="description" content="Vycount Manufacturing Ltd turns ideas into physical products — tested prototypes, production runs, manufacturing for clients, sourcing and quality.">
+<meta name="description" content="Vycount Manufacturing Ltd turns ideas into physical products, from first prototype to production run.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23141414'/%3E%3Cpath fill='%23FF5A1F' d='M5 7h7l4 10 4-10h7l-8 18h-6z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,400;100,500;100,600;125,800;125,900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,400;100,500;100,600;125,800;125,900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#E9E9E4}
-a{color:#111111}a:hover{color:#C2410C}
-.mf-nav a{text-decoration:none}
-@keyframes mfBelt{from{transform:translateX(-120px)}to{transform:translateX(0)}}
-.mf-belt{animation:mfBelt 3s linear infinite}
-@keyframes mfSpin{to{transform:rotate(360deg)}}
-.mf-spin{animation:mfSpin 12s linear infinite;transform-origin:center;transform-box:fill-box}
-.mf-row{transition:background .3s}
-.mf-row:hover{background:#FFFFFF}
-input,select,textarea{font:inherit}
+:root{
+  --paper:#ECECE7; --sheet:#F7F7F3; --ink:#141414; --muted:#55554F; --rule:#CFCFC7;
+  --grid:#DEDED7; --signal:#FF5A1F; --signal-text:#B23D0C;
+  --steel:#141414; --on-steel:#F2F2EE; --on-steel-muted:#B5B5AE;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111111; --sheet:#191919; --ink:#ECECE7; --muted:#A8A8A1; --rule:#2E2E2B;
+    --grid:#1C1C1B; --signal-text:#FF7A45; --steel:#0A0A0A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111111; --sheet:#191919; --ink:#ECECE7; --muted:#A8A8A1; --rule:#2E2E2B;
+  --grid:#1C1C1B; --signal-text:#FF7A45; --steel:#0A0A0A;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px;color:var(--ink);font-family:"Archivo",system-ui,sans-serif;font-size:1.0625rem;line-height:1.6}
+a{color:inherit}
+a:focus-visible{outline:3px solid var(--signal);outline-offset:3px;border-radius:2px}
+.wrap{max-width:70rem;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.wide{font-stretch:125%;text-transform:uppercase}
+
+/* Header */
+.topbar{display:flex;justify-content:space-between;gap:1rem;padding-block:1.25rem;font-size:.95rem;color:var(--muted)}
+.topbar a{text-decoration:none}
+.topbar a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.hero-body{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(2rem,6vw,5.5rem);align-items:center;padding-block:clamp(2rem,6vw,4.5rem) clamp(3.5rem,9vw,7rem)}
+h1{margin:0;font-weight:900;font-size:clamp(2rem,4.6vw,3.7rem);line-height:.92;letter-spacing:-.03em}
+h1 span{display:block}
+h1 .accent{color:var(--signal)}
+.lede{max-width:32ch;margin:1.6rem 0 0;font-size:clamp(1.1rem,1.9vw,1.3rem);line-height:1.45;color:var(--muted)}
+.hero-cta{display:inline-block;margin-top:2.25rem;padding:.85rem 1.4rem;background:var(--ink);color:var(--paper);font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.9rem;font-weight:500;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;border-radius:0}
+.hero-cta:hover{background:var(--signal);color:#141414}
+
+/* Drawing */
+.drawing{width:100%;max-width:420px;justify-self:end;margin:0;border:2px solid var(--ink);background:var(--sheet)}
+.drawing svg{display:block;width:100%;height:auto}
+.drawing .ln{fill:none;stroke:var(--ink);stroke-width:2}
+.drawing .hot{fill:none;stroke:var(--signal);stroke-width:2.5}
+.drawing .axis{stroke:var(--ink);stroke-width:1;stroke-dasharray:5 5}
+.drawing .lead{fill:none;stroke:var(--ink);stroke-width:1.2}
+.drawing .tag{fill:var(--ink)}
+.drawing .tag.hot-tag{fill:var(--signal)}
+.drawing .num{font:500 12px "JetBrains Mono",monospace;fill:var(--sheet)}
+.drawing .num.dark{fill:#141414}
+.drawing .lbl{font:500 11px "JetBrains Mono",monospace;fill:var(--ink)}
+.drawing figcaption{display:flex;justify-content:space-between;gap:1rem;border-top:2px solid var(--ink);padding:.55rem .9rem;font:500 .72rem "JetBrains Mono",monospace;text-transform:uppercase}
+@media (prefers-reduced-motion: no-preference){
+  .drawing .part{animation:explode 900ms cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--n) * 120ms + 200ms)}
+  .drawing .axis{animation:fade 600ms ease 100ms both}
+  .drawing .callout{animation:fade 400ms ease both;animation-delay:calc(var(--n) * 120ms + 900ms)}
+}
+@keyframes explode{from{transform:translateY(var(--from));opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* Sections */
+section{padding:clamp(3.5rem,8vw,6rem) 0;border-top:2px solid var(--ink)}
+h2{margin:0 0 2.5rem;font-weight:800;font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.05;letter-spacing:-.01em}
+.work{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2.5rem 3rem;margin:0}
+.work div{border-top:2px solid var(--ink);padding-top:1.1rem}
+.work .code{display:block;margin-bottom:.6rem;font:500 .8rem "JetBrains Mono",monospace;color:var(--signal-text)}
+.work dt{font-weight:800;font-stretch:125%;text-transform:uppercase;font-size:1.15rem;line-height:1.15}
+.work dd{margin:.5rem 0 0;color:var(--muted);max-width:36ch}
+.steps{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;margin:3rem 0 0;padding:0;list-style:none;font:500 .85rem "JetBrains Mono",monospace;text-transform:uppercase;color:var(--muted)}
+.steps li:last-child{color:var(--signal-text)}
+.steps li+li::before{content:"→";margin-right:1.1rem;color:var(--rule)}
+
+.split{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2rem 4rem}
+.split h2{margin:0}
+.about{margin:0 0 2rem;max-width:44rem;font-size:1.15rem}
+.facts{display:grid;grid-template-columns:12rem minmax(0,1fr);margin:0}
+.facts dt,.facts dd{margin:0;padding:.9rem 0;border-top:1px solid var(--rule)}
+.facts dt{color:var(--muted);font:500 .85rem "JetBrains Mono",monospace;text-transform:uppercase;padding-top:1.05rem}
+.facts dd{font-weight:500}
+.facts a{text-decoration-color:var(--signal);text-underline-offset:4px}
+
+footer{background:var(--steel);color:var(--on-steel-muted);font-size:.95rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.75rem 2rem;padding-top:2rem;padding-bottom:2rem}
+footer a{color:var(--on-steel)}
+
+@media (max-width:820px){
+  .hero-body,.split,.facts{grid-template-columns:minmax(0,1fr)}
+  .work{grid-template-columns:minmax(0,1fr)}
+  .drawing{justify-self:start;max-width:360px}
+  .facts dd{border-top:0;padding-top:0}
+}
 </style>
 </head>
 <body>
-<div style="background-color: #E9E9E4; background-image: linear-gradient(#DCDCD5 1px, transparent 1px), linear-gradient(90deg, #DCDCD5 1px, transparent 1px); background-size: 32px 32px; color: #111111; font-family: 'Archivo', 'Helvetica Neue', sans-serif; overflow: hidden">
-
-  <!-- Title block header -->
-  <header style="max-width: 1320px; margin: 0 auto; padding: 24px 40px 0">
-    <div style="border: 2px solid #111; display: flex; flex-wrap: wrap; background: #E9E9E4">
-      <a href="./" style="flex: 1 1 300px; padding: 18px 22px; border-right: 2px solid #111; text-decoration: none; display: flex; align-items: center; gap: 14px">
-        <svg class="mf-spin" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 2 L20 6 L25 4 L26 9 L31 10 L29 15 L33 18 L29 21 L31 26 L26 26 L25 31 L20 29 L17 33 L14 29 L9 31 L8 26 L3 26 L5 21 L1 18 L5 15 L3 10 L8 9 L9 4 L14 6 Z" fill="#FF5A1F"></path><circle cx="17" cy="17.5" r="6" fill="#E9E9E4"></circle></svg>
-        <span style="font-stretch: 125%; font-weight: 900; font-size: 20px; letter-spacing: 0.02em; text-transform: uppercase">Vycount Mfg.</span>
-      </a>
-      <nav class="mf-nav" aria-label="Main" style="flex: 999 1 520px; display: flex; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 14px; text-transform: uppercase">
-        <a href="#process" style="flex: 1 1 120px; box-sizing: border-box; padding: 18px 20px; border-right: 2px solid #111; display: flex; align-items: center; min-height: 44px">Process</a>
-        <a href="#services" style="flex: 1 1 120px; box-sizing: border-box; padding: 18px 20px; border-right: 2px solid #111; display: flex; align-items: center; min-height: 44px">Services</a>
-        <a href="https://vycount.com/" style="flex: 1 1 120px; box-sizing: border-box; padding: 18px 20px; border-right: 2px solid #111; display: flex; align-items: center; min-height: 44px">Vycount</a>
-        <a href="#quote" style="flex: 1 1 160px; box-sizing: border-box; padding: 18px 20px; background: #FF5A1F; display: flex; align-items: center; justify-content: space-between; min-height: 44px; font-weight: 700">Get a quote <span aria-hidden="true">→</span></a>
-      </nav>
+<header>
+  <div class="wrap topbar">
+    <a href="https://vycount.com/">A Vycount company</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="wrap hero-body">
+    <div>
+      <h1 class="wide"><span>Vycount</span><span class="accent">Manufacturing</span></h1>
+      <p class="lede">We turn ideas into physical products, from first prototype to production run.</p>
+      <a class="hero-cta" href="mailto:manufacturing@vycount.com">Email us →</a>
     </div>
-  </header>
+    <figure class="drawing" aria-hidden="true">
+      <svg viewBox="0 0 420 380">
+        <line class="axis" x1="170" y1="16" x2="170" y2="364"></line>
+        <g class="part" style="--n:0;--from:40px">
+          <ellipse class="ln" cx="170" cy="62" rx="84" ry="20"></ellipse>
+          <path class="ln" d="M86 62 V78 A84 20 0 0 0 254 78 V62"></path>
+        </g>
+        <g class="part" style="--n:1;--from:22px">
+          <ellipse class="ln" cx="170" cy="138" rx="74" ry="18"></ellipse>
+          <path class="ln" d="M96 138 V250 A74 18 0 0 0 244 250 V138"></path>
+        </g>
+        <g class="part" style="--n:2;--from:10px">
+          <ellipse class="hot" cx="170" cy="186" rx="36" ry="9"></ellipse>
+          <path class="hot" d="M134 186 V222 A36 9 0 0 0 206 222 V186"></path>
+        </g>
+        <g class="part" style="--n:3;--from:-24px">
+          <ellipse class="ln" cx="170" cy="310" rx="90" ry="22"></ellipse>
+          <path class="ln" d="M80 310 V326 A90 22 0 0 0 260 326 V310"></path>
+        </g>
+        <g class="callout" style="--n:0"><path class="lead" d="M254 66 L310 46 H338"></path><circle class="tag" cx="352" cy="46" r="12"></circle><text class="num" x="348" y="50">1</text><text class="lbl" x="370" y="50">LID</text></g>
+        <g class="callout" style="--n:1"><path class="lead" d="M244 160 L310 136 H338"></path><circle class="tag" cx="352" cy="136" r="12"></circle><text class="num" x="348" y="140">2</text><text class="lbl" x="370" y="140">BODY</text></g>
+        <g class="callout" style="--n:2"><path class="lead" d="M206 206 L310 226 H338"></path><circle class="tag hot-tag" cx="352" cy="226" r="12"></circle><text class="num dark" x="348" y="230">3</text><text class="lbl" x="370" y="230">PART</text></g>
+        <g class="callout" style="--n:3"><path class="lead" d="M260 318 L310 318 H338"></path><circle class="tag" cx="352" cy="318" r="12"></circle><text class="num" x="348" y="322">4</text><text class="lbl" x="370" y="322">BASE</text></g>
+      </svg>
+      <figcaption><span>Fig. 01 — Exploded view</span><span>Rev. A</span></figcaption>
+    </figure>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section style="max-width: 1320px; margin: 0 auto; padding: 72px 40px 96px">
-    <div style="display: flex; flex-wrap: wrap; gap: 12px 32px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase; color: #3A3A36">
-      <span>DWG No. VM-001</span><span>Rev. A</span><span>Est. 2026</span><span>Scale 1:1</span>
-    </div>
-    <h1 style="font-stretch: 125%; font-weight: 900; font-size: clamp(54px, 9.4vw, 148px); line-height: 0.86; letter-spacing: -0.03em; text-transform: uppercase; margin: 28px 0 0">From sketch<br>to <span style="color: #FF5A1F">shelf.</span></h1>
-    <div style="display: flex; flex-wrap: wrap; gap: 48px; margin-top: 56px; align-items: stretch">
-      <div style="flex: 1 1 380px; display: flex; flex-direction: column; justify-content: space-between; gap: 32px">
-        <p style="font-size: 22px; line-height: 1.5; margin: 0; max-width: 480px; font-weight: 500">We turn ideas into physical products — tested prototypes first, then production runs sized to real demand.</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 12px">
-          <a href="#quote" style="background: #111; color: #E9E9E4; padding: 18px 26px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 14px; text-transform: uppercase; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Make something with us</a>
-          <a href="#process" style="border: 2px solid #111; padding: 16px 24px; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 14px; text-transform: uppercase; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">See the process</a>
-        </div>
-      </div>
-      <!-- Exploded view -->
-      <figure style="flex: 999 1 560px; min-width: 0; margin: 0; border: 2px solid #111; background: #F4F4F0; position: relative">
-        <svg viewBox="0 0 640 400" role="img" aria-label="Exploded technical drawing of a product: lid, body, insert and base" style="width: 100%; display: block">
-          <g fill="none" stroke="#111" stroke-width="2">
-            <ellipse cx="300" cy="70" rx="90" ry="22"></ellipse>
-            <path d="M210 70 V88 A90 22 0 0 0 390 88 V70"></path>
-            <ellipse cx="300" cy="150" rx="80" ry="20"></ellipse>
-            <path d="M220 150 V270 A80 20 0 0 0 380 270 V150"></path>
-            <ellipse cx="300" cy="200" rx="40" ry="10" stroke="#FF5A1F" stroke-width="2.5"></ellipse>
-            <path d="M260 200 V240 A40 10 0 0 0 340 240 V200" stroke="#FF5A1F" stroke-width="2.5"></path>
-            <ellipse cx="300" cy="330" rx="96" ry="24"></ellipse>
-            <path d="M204 330 V346 A96 24 0 0 0 396 346 V330"></path>
-          </g>
-          <g stroke="#111" stroke-width="1" stroke-dasharray="5 5"><line x1="300" y1="20" x2="300" y2="390"></line></g>
-          <g stroke="#111" stroke-width="1.2" fill="none">
-            <path d="M390 75 L470 50 H540"></path>
-            <path d="M380 180 L470 150 H540"></path>
-            <path d="M340 220 L470 240 H540"></path>
-            <path d="M396 338 L470 340 H540"></path>
-          </g>
-          <g font-family="JetBrains Mono, monospace" font-size="13" fill="#111">
-            <circle cx="556" cy="50" r="13" fill="#111"></circle><text x="551" y="55" fill="#F4F4F0">1</text><text x="576" y="55">LID</text>
-            <circle cx="556" cy="150" r="13" fill="#111"></circle><text x="551" y="155" fill="#F4F4F0">2</text><text x="576" y="155">BODY</text>
-            <circle cx="556" cy="240" r="13" fill="#FF5A1F"></circle><text x="551" y="245" fill="#111">3</text><text x="576" y="245">INSERT</text>
-            <circle cx="556" cy="340" r="13" fill="#111"></circle><text x="551" y="345" fill="#F4F4F0">4</text><text x="576" y="345">BASE</text>
-            <text x="30" y="40">FIG. 01 — EXPLODED VIEW</text>
-            <line x1="70" y1="150" x2="70" y2="290" stroke="#111"></line><line x1="62" y1="150" x2="78" y2="150" stroke="#111"></line><line x1="62" y1="290" x2="78" y2="290" stroke="#111"></line>
-            <text x="30" y="225" transform="rotate(-90 40 225)">[HEIGHT]</text>
-          </g>
-        </svg>
-        <figcaption style="border-top: 2px solid #111; padding: 10px 16px; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap"><span>Illustrative part</span><span>Tolerances to client spec</span></figcaption>
-      </figure>
+<main>
+  <section>
+    <div class="wrap">
+      <h2 class="wide">What we do</h2>
+      <dl class="work">
+        <div><dt><span class="code">SVC-01</span>Product development</dt><dd>Turning concepts into tested prototypes and production-ready designs.</dd></div>
+        <div><dt><span class="code">SVC-02</span>Production</dt><dd>Making our own products in batches matched to demand.</dd></div>
+        <div><dt><span class="code">SVC-03</span>Manufacturing for clients</dt><dd>Parts and products made to a client’s design and specifications.</dd></div>
+        <div><dt><span class="code">SVC-04</span>Sourcing and quality</dt><dd>Finding materials, parts and suppliers, and inspecting every batch before it ships.</dd></div>
+      </dl>
+      <ol class="steps" aria-label="How a product moves through the line">
+        <li>Concept</li><li>Prototype</li><li>Test</li><li>Batch</li><li>Inspect</li><li>Ship</li>
+      </ol>
     </div>
   </section>
 
-  <!-- Conveyor process -->
-  <section id="process" style="background: #111111; color: #E9E9E4; padding: 112px 0 96px">
-    <div style="max-width: 1320px; margin: 0 auto; padding: 0 40px">
-      <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FF7A45; text-transform: uppercase; letter-spacing: 0.08em">Section A — The line</div>
-      <h2 style="font-stretch: 125%; font-weight: 900; font-size: clamp(38px, 5.6vw, 80px); line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; margin: 18px 0 64px; max-width: 900px">Every product runs the same line.</h2>
-    </div>
-    <!-- belt -->
-    <div aria-hidden="true" style="position: relative; height: 70px; overflow: hidden; border-top: 3px solid #E9E9E4; border-bottom: 3px solid #E9E9E4; margin-bottom: 56px">
-      <div class="mf-belt" style="position: absolute; left: 0; top: 13px; display: flex; gap: 80px; width: 200%">
-        <span style="width: 40px; height: 40px; background: #FF5A1F; flex: none"></span><span style="width: 40px; height: 40px; border: 2px solid #E9E9E4; box-sizing: border-box; flex: none"></span><span style="width: 40px; height: 40px; background: #E9E9E4; border-radius: 50%; flex: none"></span><span style="width: 40px; height: 40px; background: #FF5A1F; flex: none"></span><span style="width: 40px; height: 40px; border: 2px solid #E9E9E4; box-sizing: border-box; flex: none"></span><span style="width: 40px; height: 40px; background: #E9E9E4; border-radius: 50%; flex: none"></span><span style="width: 40px; height: 40px; background: #FF5A1F; flex: none"></span><span style="width: 40px; height: 40px; border: 2px solid #E9E9E4; box-sizing: border-box; flex: none"></span><span style="width: 40px; height: 40px; background: #E9E9E4; border-radius: 50%; flex: none"></span><span style="width: 40px; height: 40px; background: #FF5A1F; flex: none"></span><span style="width: 40px; height: 40px; border: 2px solid #E9E9E4; box-sizing: border-box; flex: none"></span><span style="width: 40px; height: 40px; background: #E9E9E4; border-radius: 50%; flex: none"></span><span style="width: 40px; height: 40px; background: #FF5A1F; flex: none"></span><span style="width: 40px; height: 40px; border: 2px solid #E9E9E4; box-sizing: border-box; flex: none"></span><span style="width: 40px; height: 40px; background: #E9E9E4; border-radius: 50%; flex: none"></span><span style="width: 40px; height: 40px; background: #FF5A1F; flex: none"></span>
-      </div>
-    </div>
-    <ol style="max-width: 1320px; margin: 0 auto; padding: 0 40px; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 0; box-sizing: border-box">
-      <li style="border-left: 2px solid #3A3A36; padding: 0 20px 8px; display: flex; flex-direction: column; gap: 12px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FF7A45">STN 01</span><span style="font-stretch: 125%; font-weight: 800; font-size: 22px; text-transform: uppercase">Concept</span><span style="font-size: 15px; line-height: 1.55; color: #B5B5AE">The idea, pinned down on paper.</span></li>
-      <li style="border-left: 2px solid #3A3A36; padding: 0 20px 8px; display: flex; flex-direction: column; gap: 12px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FF7A45">STN 02</span><span style="font-stretch: 125%; font-weight: 800; font-size: 22px; text-transform: uppercase">Prototype</span><span style="font-size: 15px; line-height: 1.55; color: #B5B5AE">A first version you can hold.</span></li>
-      <li style="border-left: 2px solid #3A3A36; padding: 0 20px 8px; display: flex; flex-direction: column; gap: 12px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FF7A45">STN 03</span><span style="font-stretch: 125%; font-weight: 800; font-size: 22px; text-transform: uppercase">Test</span><span style="font-size: 15px; line-height: 1.55; color: #B5B5AE">Used, stressed and refined.</span></li>
-      <li style="border-left: 2px solid #3A3A36; padding: 0 20px 8px; display: flex; flex-direction: column; gap: 12px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FF7A45">STN 04</span><span style="font-stretch: 125%; font-weight: 800; font-size: 22px; text-transform: uppercase">Batch</span><span style="font-size: 15px; line-height: 1.55; color: #B5B5AE">Made in runs matched to demand.</span></li>
-      <li style="border-left: 2px solid #3A3A36; padding: 0 20px 8px; display: flex; flex-direction: column; gap: 12px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FF7A45">STN 05</span><span style="font-stretch: 125%; font-weight: 800; font-size: 22px; text-transform: uppercase">Inspect</span><span style="font-size: 15px; line-height: 1.55; color: #B5B5AE">Every batch checked before it leaves.</span></li>
-      <li style="border-left: 2px solid #FF5A1F; padding: 0 20px 8px; display: flex; flex-direction: column; gap: 12px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FF7A45">STN 06</span><span style="font-stretch: 125%; font-weight: 800; font-size: 22px; text-transform: uppercase; color: #FF7A45">Ship</span><span style="font-size: 15px; line-height: 1.55; color: #B5B5AE">Out the door, ready to use.</span></li>
-    </ol>
-  </section>
-
-  <!-- Services spec sheet -->
-  <section id="services" style="max-width: 1320px; margin: 0 auto; padding: 112px 40px">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 40px">
+  <section id="contact">
+    <div class="wrap split">
+      <h2 class="wide">Company details</h2>
       <div>
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #B83A0B; text-transform: uppercase; letter-spacing: 0.08em">Section B — Spec sheet</div>
-        <h2 style="font-stretch: 125%; font-weight: 900; font-size: clamp(38px, 5.6vw, 80px); line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; margin: 18px 0 0">What we do</h2>
-      </div>
-      <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">4 items</span>
-    </div>
-    <div style="border: 2px solid #111; background: #F4F4F0">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; background: #111; color: #E9E9E4">
-        <span style="padding: 14px 24px">Item</span><span style="padding: 14px 24px">Scope</span>
-      </div>
-      <div class="mf-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); border-top: 2px solid #111; align-items: start">
-        <div style="padding: 32px 24px; display: flex; gap: 16px; align-items: baseline"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #B83A0B">SVC-01</span><span style="font-stretch: 125%; font-weight: 800; font-size: 26px; text-transform: uppercase; line-height: 1.05">Product development</span></div>
-        <p style="padding: 32px 24px; margin: 0; font-size: 18px; line-height: 1.6">Turning concepts into tested prototypes and production-ready designs.</p>
-      </div>
-      <div class="mf-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); border-top: 2px solid #111; align-items: start">
-        <div style="padding: 32px 24px; display: flex; gap: 16px; align-items: baseline"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #B83A0B">SVC-02</span><span style="font-stretch: 125%; font-weight: 800; font-size: 26px; text-transform: uppercase; line-height: 1.05">Production</span></div>
-        <p style="padding: 32px 24px; margin: 0; font-size: 18px; line-height: 1.6">Making our own products, in batches matched to demand.</p>
-      </div>
-      <div class="mf-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); border-top: 2px solid #111; align-items: start">
-        <div style="padding: 32px 24px; display: flex; gap: 16px; align-items: baseline"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #B83A0B">SVC-03</span><span style="font-stretch: 125%; font-weight: 800; font-size: 26px; text-transform: uppercase; line-height: 1.05">Manufacturing for clients</span></div>
-        <p style="padding: 32px 24px; margin: 0; font-size: 18px; line-height: 1.6">Parts and products made to your design and your specifications.</p>
-      </div>
-      <div class="mf-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); border-top: 2px solid #111; align-items: start">
-        <div style="padding: 32px 24px; display: flex; gap: 16px; align-items: baseline"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #B83A0B">SVC-04</span><span style="font-stretch: 125%; font-weight: 800; font-size: 26px; text-transform: uppercase; line-height: 1.05">Sourcing &amp; quality</span></div>
-        <p style="padding: 32px 24px; margin: 0; font-size: 18px; line-height: 1.6">Finding materials, parts and suppliers — and inspecting every batch before it ships.</p>
+        <p class="about">Vycount Manufacturing develops and makes physical products — our own, and to our clients’ designs. It is one of the Vycount companies.</p>
+        <dl class="facts">
+          <dt>Legal name</dt><dd>Vycount Manufacturing Ltd</dd>
+          <dt>RC number</dt><dd>9344948</dd>
+          <dt>Email</dt><dd><a href="mailto:manufacturing@vycount.com">manufacturing@vycount.com</a></dd>
+        </dl>
       </div>
     </div>
   </section>
+</main>
 
-  <!-- Quote -->
-  <section id="quote" style="max-width: 1320px; margin: 0 auto; padding: 0 40px 112px">
-    <div style="background: #FF5A1F; border: 2px solid #111; display: flex; flex-wrap: wrap">
-      <div style="flex: 1 1 380px; padding: clamp(32px, 5vw, 64px); border-right: 2px solid #111; display: flex; flex-direction: column; justify-content: space-between; gap: 40px">
-        <h2 style="font-stretch: 125%; font-weight: 900; font-size: clamp(40px, 5.4vw, 76px); line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase; margin: 0">Bring a design.<br>Leave with product.</h2>
-        <div style="display: flex; flex-direction: column; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 15px">
-          <a href="mailto:manufacturing@vycount.com">manufacturing@vycount.com</a>
-        </div>
-      </div>
-      <form data-mailto="manufacturing@vycount.com" data-subject="Quote request" style="flex: 999 1 520px; min-width: 0; padding: clamp(32px, 5vw, 64px); background: #F4F4F0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 20px; font-family: 'JetBrains Mono', monospace">
-        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; text-transform: uppercase">Product / part
-          <input type="text" style="border: 2px solid #111; background: #FFFFFF; padding: 14px; min-height: 52px; box-sizing: border-box; font-family: 'Archivo', sans-serif; font-size: 16px; text-transform: none">
-        </label>
-        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; text-transform: uppercase">Quantity
-          <input type="text" style="border: 2px solid #111; background: #FFFFFF; padding: 14px; min-height: 52px; box-sizing: border-box; font-family: 'Archivo', sans-serif; font-size: 16px">
-        </label>
-        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; text-transform: uppercase">Stage
-          <select style="border: 2px solid #111; background: #FFFFFF; padding: 14px; min-height: 52px; box-sizing: border-box; font-family: 'Archivo', sans-serif; font-size: 16px">
-            <option>Just an idea</option>
-            <option>Have drawings</option>
-            <option>Have a prototype</option>
-            <option>Ready for production</option>
-          </select>
-        </label>
-        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; text-transform: uppercase">Your email
-          <input type="email" style="border: 2px solid #111; background: #FFFFFF; padding: 14px; min-height: 52px; box-sizing: border-box; font-family: 'Archivo', sans-serif; font-size: 16px">
-        </label>
-        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; text-transform: uppercase; grid-column: 1 / -1">Notes
-          <textarea rows="3" style="border: 2px solid #111; background: #FFFFFF; padding: 14px; font-family: 'Archivo', sans-serif; font-size: 16px; resize: vertical"></textarea>
-        </label>
-        <button type="submit" style="grid-column: 1 / -1; justify-self: start; background: #111; color: #E9E9E4; border: 0; padding: 18px 28px; font-family: 'JetBrains Mono', monospace; font-size: 14px; text-transform: uppercase; min-height: 52px; cursor: pointer">Request a quote →</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer style="max-width: 1320px; margin: 0 auto; padding: 0 40px 40px">
-    <div style="border-top: 2px solid #111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; text-transform: uppercase">
-      <span>Vycount Manufacturing Ltd · RC 9344948 · Est. 2026</span>
-      <a href="https://vycount.com/">A Vycount company</a>
-    </div>
-  </footer>
-</div>
-<script>
-document.querySelectorAll('form[data-mailto]').forEach(function(f){
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var lines=[];
-    f.querySelectorAll('label').forEach(function(l){
-      var c=l.querySelector('input,select,textarea'); if(!c||!c.value) return;
-      lines.push(l.childNodes[0].textContent.trim()+': '+c.value);
-    });
-    location.href='mailto:'+f.dataset.mailto+'?subject='+encodeURIComponent(f.dataset.subject)+'&body='+encodeURIComponent(lines.join('\n'));
-  });
-});
-</script>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Vycount Manufacturing Ltd. RC 9344948.</span>
+    <a href="https://vycount.com/">vycount.com</a>
+  </div>
+</footer>
 </body>
 </html>
