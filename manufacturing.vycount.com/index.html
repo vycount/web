@@ -39,7 +39,8 @@ a:focus-visible{outline:3px solid var(--signal);outline-offset:3px;border-radius
 .topbar a{text-decoration:none}
 .topbar a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
 .hero-body{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(2rem,6vw,5.5rem);align-items:center;padding-block:clamp(2rem,6vw,4.5rem) clamp(3.5rem,9vw,7rem)}
-h1{margin:0;font-weight:900;font-size:clamp(2rem,4.6vw,3.7rem);line-height:.92;letter-spacing:-.03em}
+.hero-text{container-type:inline-size}
+h1{margin:0;font-weight:900;font-size:clamp(1.75rem,4.2vw,3.7rem);font-size:min(3.7rem,7.6cqi);line-height:.92;letter-spacing:-.03em}
 h1 span{display:block}
 h1 .accent{color:var(--signal)}
 .lede{max-width:32ch;margin:1.6rem 0 0;font-size:clamp(1.1rem,1.9vw,1.3rem);line-height:1.45;color:var(--muted)}
@@ -107,7 +108,7 @@ footer a{color:var(--on-steel)}
     <a href="#contact">Contact</a>
   </div>
   <div class="wrap hero-body">
-    <div>
+    <div class="hero-text">
       <h1 class="wide"><span>Vycount</span><span class="accent">Manufacturing</span></h1>
       <p class="lede">We turn ideas into physical products, from first prototype to production run.</p>
       <a class="hero-cta" href="mailto:manufacturing@vycount.com">Email us →</a>
