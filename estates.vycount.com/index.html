@@ -81,23 +81,24 @@
     padding-top: clamp(2rem, 6vw, 4.5rem);
     padding-bottom: clamp(3.5rem, 9vw, 7rem);
   }
-  h1 {
+  .hero-copy { min-width: 0; container-type: inline-size; }
+  /* Sized to its column so the whole name always sits on one line */
+  h1.serif {
     margin: 0;
     font-weight: 600;
-    font-size: clamp(2.9rem, 7.4vw, 5.75rem);
+    font-size: min(5.75rem, 9cqi);
+    font-variation-settings: "opsz" 92, "SOFT" 60;   /* fixed, so the name's width scales evenly with its size */
     line-height: 0.98;
     letter-spacing: -0.02em;
   }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   /* The name folds to "VycountE&S" and back; each piece is a block so it can be moved */
-  h1 .name { position: relative; display: flex; flex-wrap: wrap; align-content: flex-start; align-items: flex-start; column-gap: 0.15em; }
-  h1 .name span { display: block; white-space: nowrap; }
+  h1 .name { position: relative; display: flex; column-gap: 0.15em; white-space: nowrap; }
+  h1 .name span { display: block; }
   h1 .name .w { display: flex; }
-  h1 .name .br { flex-basis: 100%; }
   h1 .name .short,
-  h1 .name.is-short .long,
-  h1 .name.is-short .br { display: none; }
+  h1 .name.is-short .long { display: none; }
   h1 .name.is-short .short { display: block; }
   h1 .name.is-short { column-gap: 0; }
   .lede {
@@ -185,13 +186,12 @@
 <body>
   <header>
     <div class="wrap hero-body">
-      <div>
+      <div class="hero-copy">
         <h1 class="serif">
           <span class="sr-only">Vycount Estates and Spaces</span>
           <span class="name" aria-hidden="true">
             <span class="w"><span>Vycount</span></span>
             <span class="w"><span>E</span><span class="long">states</span></span>
-            <span class="br"></span>
             <span class="w"><span class="long">and</span><span class="short">&amp;</span></span>
             <span class="w"><span>S</span><span class="long">paces</span></span>
           </span>
@@ -265,60 +265,51 @@
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Fold the name to "VycountE&S" and back: the extra letters fade out, the rest slide together.
+// Fold the name to "VycountE&S" and back: the extra letters fade out, the rest slide together along the line.
 (() => {
   const name = document.querySelector('h1 .name');
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
   if (!name.animate || !motion.matches) return;
 
-  const FADE = 450, MOVE = 1000, STAGGER = 60, EASE = 'cubic-bezier(.65,0,.25,1)';
+  const FADE = 450, MOVE = 900, STAGGER = 60, EASE = 'cubic-bezier(.65,0,.25,1)';
   const pieces = [...name.querySelectorAll('.w > span')];
   const amp = name.querySelector('.short'), and = amp.previousElementSibling;
   const wait = ms => new Promise(done => setTimeout(done, ms));
-  const centre = r => [r.left + r.width / 2, r.top + r.height / 2];
+  const centre = r => r.left + r.width / 2;
 
   function fold(toShort) {
     const box = name.getBoundingClientRect();
     const before = new Map(pieces.filter(p => p.offsetParent).map(p => [p, p.getBoundingClientRect()]));
-
-    // Hold the two-line height while folded so nothing below the name moves
-    name.style.minHeight = toShort ? box.height / parseFloat(getComputedStyle(name).fontSize) + 'em' : '';
     name.classList.toggle('is-short', toShort);
 
     const leaving = [...before.keys()].filter(p => !p.offsetParent);
     const entering = pieces.filter(p => p.offsetParent && !before.has(p));
+    // Letters on their way out stay where they were while they fade
     leaving.forEach(p => {
       const r = before.get(p);
       p.style.cssText = `display:block;position:absolute;left:${r.left - box.left}px;top:${r.top - box.top}px`;
     });
     const after = new Map(pieces.filter(p => p.offsetParent && !leaving.includes(p)).map(p => [p, p.getBoundingClientRect()]));
 
-    // "&" appears where "and" stood and travels from there, and goes back there to turn into "and"
+    // "&" appears where "and" stood and travels from there; going back, it returns there to turn into "and"
     const from = p => centre(before.get(p) || before.get(and));
     const to = p => centre(after.get(p) || after.get(and));
     const movers = pieces.filter(p => p === amp || (before.has(p) && after.has(p)))
-      .filter(p => from(p).join() !== to(p).join());
-    const fadeAt = toShort ? 0 : MOVE + STAGGER * (movers.length - 1) - 100;
+      .filter(p => Math.abs(from(p) - to(p)) > 0.5);
     const moveAt = toShort ? FADE - 150 : 0;
+    const fadeAt = toShort ? 0 : moveAt + MOVE + STAGGER * (movers.length - 1) - 100;
     const run = (p, frames, delay, duration, easing) => p.animate(frames, { delay, duration, easing, fill: 'both' });
 
     const anims = [
       ...leaving.map(p => run(p, [{ opacity: 1 }, { opacity: 0 }], fadeAt, FADE, 'ease')),
       ...entering.map(p => run(p, [{ opacity: 0 }, { opacity: 1 }], fadeAt, FADE, 'ease')),
     ];
-    // Folding, letters slide along their line and then rise; unfolding, they drop and then slide back
-    const lead = [0, MOVE * 0.75], lag = [MOVE * 0.3, MOVE * 0.7];
-    const [alongX, alongY] = toShort ? [lead, lag] : [lag, lead];
+    // The letter at the front of the travel sets off first, so none catches up with the one ahead
     movers.forEach((p, i) => {
-      // The letter at the front of the travel sets off first, so none catches up with the one ahead
-      const at = moveAt + (toShort ? movers.length - 1 - i : i) * STAGGER;
-      // A pinned piece travels away from where it stands; the others settle into where they now are
-      const pinned = leaving.includes(p), [a, b] = [from(p), to(p)];
-      const ends = (prop, rest, moved) => pinned ? [{ [prop]: rest }, { [prop]: moved }] : [{ [prop]: moved }, { [prop]: rest }];
-      const dx = (pinned ? b[0] - a[0] : a[0] - b[0]), dy = (pinned ? b[1] - a[1] : a[1] - b[1]);
-      anims.push(
-        run(p, ends('translate', '0px 0px', `${dx}px 0px`), at + alongX[0], alongX[1], EASE),
-        run(p, ends('transform', 'none', `translateY(${dy}px)`), at + alongY[0], alongY[1], EASE));
+      const at = moveAt + (toShort ? i : movers.length - 1 - i) * STAGGER;
+      const pinned = leaving.includes(p);   // pinned: travels away from where it stands
+      const dx = pinned ? to(p) - from(p) : from(p) - to(p);
+      anims.push(run(p, pinned ? [{ translate: '0px' }, { translate: dx + 'px' }] : [{ translate: dx + 'px' }, { translate: '0px' }], at, MOVE, EASE));
     });
 
     return Promise.all(anims.map(a => a.finished)).then(() => {
