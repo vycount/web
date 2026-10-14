@@ -329,12 +329,13 @@ document.getElementById('year').textContent = new Date().getFullYear();
   (async () => {
     await document.fonts.ready;
     await wait(2500);
+    // The first fold and unfold play straight away; after that, once every 3 to 5 minutes
     while (motion.matches) {
       if (document.hidden) { await wait(1000); continue; }
       await fold(true);
       await wait(2500);
       await fold(false);
-      await wait(6000);
+      await wait((3 + Math.random() * 2) * 60000);
     }
   })();
 })();
